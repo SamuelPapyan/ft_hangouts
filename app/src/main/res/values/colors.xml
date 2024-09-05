@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="indigo">#3F51B5</color>
+    <color name="indigoDark">#303F9F</color>
+    <color name="pink">#FF4081</color>
+    <color name="teal">#009688</color>
+    <color name="tealDark">#00796B</color>
+    <color name="deepOrange">#FF5722</color>
+    <color name="grey">#999999</color>
+    <color name="blueGrey">#607D8B</color>
+    <color name="blueGreyDark">#455A64</color>
+    <color name="red">#FF5252</color>
+    <color name="deepPurple">#673AB7</color>
+    <color name="deepPurpleDark">#512DA8</color>
+    <color name="lime">#CDDC39</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
