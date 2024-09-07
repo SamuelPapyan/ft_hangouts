@@ -100,7 +100,7 @@
             android:exported="true">
 
             <intent-filter>
-                <action android:name="fr.ecole42.fbicher.ft_hangouts.action.VIEW_SMS" />
+                <action android:name="com.example.ft_hangouts.action.VIEW_SMS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.item/vnd.florin.contacts" />
             </intent-filter>

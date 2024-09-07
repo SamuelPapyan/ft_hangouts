@@ -234,6 +234,7 @@ public class ContactViewActivity extends BaseActivity{
                         // nothing
                     }
                 });
+        queryHandler.startQuery(QUERY_TOKEN, null, mUri, PROJECTION, null, null, null);
     }
 
     @Override
