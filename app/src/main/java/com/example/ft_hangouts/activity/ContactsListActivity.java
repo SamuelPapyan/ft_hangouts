@@ -1,14 +1,18 @@
 package com.example.ft_hangouts.activity;
 
 import android.Manifest;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
+
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+
 import android.content.Intent;
-import android.content.Loader;
+
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,6 +85,8 @@ public class ContactsListActivity extends BaseActivity
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             initRecyclerView();
+            LoaderManager lm = getSupportLoaderManager();
+            lm.initLoader(CONTACTS_LOADER_ID, null, this);
         } else {
             mContactsNotAvailableTv.setVisibility(View.VISIBLE);
             requestReadStoragePermission();
@@ -105,27 +111,6 @@ public class ContactsListActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                this,
-                getIntent().getData(),
-                PROJECTION,
-                null,
-                null,
-                ContactsContract.Contacts.DEFAULT_SORT_ORDER
-        );
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -172,7 +157,28 @@ public class ContactsListActivity extends BaseActivity
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ContactsCursorRecyclerAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
+    }
 
-        getLoaderManager().initLoader(CONTACTS_LOADER_ID, null, this);
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        return new CursorLoader(
+                this,
+                ContactsContract.Contacts.CONTENT_URI,
+                PROJECTION,
+                null,
+                null,
+                ContactsContract.Contacts.DEFAULT_SORT_ORDER
+        );
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader loader) {
+        mAdapter.swapCursor(null);
     }
 }
