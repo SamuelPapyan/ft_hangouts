@@ -136,7 +136,7 @@ public class ContactEditActivity extends BaseActivity{
         Log.d(TAG, "onResume: called");
         super.onResume();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.txt_storage_permission_refused, Toast.LENGTH_LONG).show();
             finish();
