@@ -70,6 +70,18 @@ public class ContactEditActivity extends BaseActivity{
     private EditText mEmailEt;
     private EditText mAddressEt;
 
+    private static final String BUFFER_NAME = "buffer_name";
+    private static final String BUFFER_LAST_NAME = "buffer_last_name";
+    private static final String BUFFER_PHONE = "buffer_phone";
+    private static final String BUFFER_EMAIL = "buffer_email";
+    private static final String BUFFER_ADDRESS = "buffer_address";
+
+    private String bufferName = null;
+    private String bufferLastName = null;
+    private String bufferPhone = null;
+    private String bufferEmail = null;
+    private String bufferAddress = null;
+
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: called");
@@ -92,6 +104,11 @@ public class ContactEditActivity extends BaseActivity{
             if (avatarUri != null) {
                 mAvatarUri = Uri.parse(avatarUri);
             }
+            bufferName = savedInstanceState.getString(BUFFER_NAME);
+            bufferLastName = savedInstanceState.getString(BUFFER_LAST_NAME);
+            bufferPhone = savedInstanceState.getString(BUFFER_PHONE);
+            bufferEmail = savedInstanceState.getString(BUFFER_EMAIL);
+            bufferAddress = savedInstanceState.getString(BUFFER_ADDRESS);
         }
 
         mAvatarIv = (ImageView) findViewById(R.id.iv_avatar);
@@ -166,23 +183,23 @@ public class ContactEditActivity extends BaseActivity{
                                 }
 
                                 int nameIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_NAME);
-                                String name = mCursor.getString(nameIndex);
+                                String name = bufferName != null ? bufferName : mCursor.getString(nameIndex);
                                 mNameEt.setTextKeepState(name);
 
                                 int lastNameIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_LAST_NAME);
-                                String lastName = mCursor.getString(lastNameIndex);
+                                String lastName = bufferLastName != null ? bufferLastName : mCursor.getString(lastNameIndex);
                                 mLastNameEt.setTextKeepState(lastName);
 
                                 int phoneIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_PHONE);
-                                String phone = mCursor.getString(phoneIndex);
+                                String phone = bufferPhone != null ? bufferPhone : mCursor.getString(phoneIndex);
                                 mPhoneEt.setTextKeepState(phone);
 
                                 int emailIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_EMAIL);
-                                String email = mCursor.getString(emailIndex);
+                                String email = bufferEmail != null ? bufferEmail : mCursor.getString(emailIndex);
                                 mEmailEt.setTextKeepState(email);
 
                                 int addressIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_ADDRESS);
-                                String address = mCursor.getString(addressIndex);
+                                String address = bufferAddress != null ? bufferAddress : mCursor.getString(addressIndex);
                                 mAddressEt.setTextKeepState(address);
                             } else {
                                 setTitle(getText(R.string.title_error));
@@ -218,6 +235,11 @@ public class ContactEditActivity extends BaseActivity{
         if (mUri != null) {
             savedInstanceState.putString(STATE_URI, mUri.toString());
         }
+        savedInstanceState.putString(BUFFER_NAME, mNameEt.getText().toString());
+        savedInstanceState.putString(BUFFER_LAST_NAME, mLastNameEt.getText().toString());
+        savedInstanceState.putString(BUFFER_PHONE, mPhoneEt.getText().toString());
+        savedInstanceState.putString(BUFFER_EMAIL, mEmailEt.getText().toString());
+        savedInstanceState.putString(BUFFER_ADDRESS, mAddressEt.getText().toString());
         super.onSaveInstanceState(savedInstanceState);
     }
 
