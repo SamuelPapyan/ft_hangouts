@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -58,6 +59,8 @@ public class SmsActivity extends BaseActivity
     private RecyclerView mRecyclerView;
     private EditText mSendMessageEt;
     private ImageButton mSendMessageIb;
+
+    private static final String BUFFER_MESSAGE = "buffer_message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +130,17 @@ public class SmsActivity extends BaseActivity
                 }
             }
         });
+
+        if (savedInstanceState != null) {
+            mSendMessageEt.setTextKeepState(savedInstanceState.getString(BUFFER_MESSAGE));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onSaveInstanceState: called");
+        savedInstanceState.putString(BUFFER_MESSAGE, mSendMessageEt.getText().toString());
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
