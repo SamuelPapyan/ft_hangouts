@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -136,7 +137,9 @@ public class ContactEditActivity extends BaseActivity{
         Log.d(TAG, "onResume: called");
         super.onResume();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+        if (Build.VERSION.SDK_INT >= 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                != PackageManager.PERMISSION_GRANTED &&
+                Build.VERSION.SDK_INT < 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.txt_storage_permission_refused, Toast.LENGTH_LONG).show();
             finish();
@@ -176,7 +179,7 @@ public class ContactEditActivity extends BaseActivity{
 
                                 int emailIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_EMAIL);
                                 String email = mCursor.getString(emailIndex);
-                                mEmailEt.setTextKeepState(phone);
+                                mEmailEt.setTextKeepState(email);
 
                                 int addressIndex = mCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME_ADDRESS);
                                 String address = mCursor.getString(addressIndex);
