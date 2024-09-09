@@ -37,22 +37,20 @@ public class SmsCursorRecyclerAdapter extends CursorRecyclerAdapter {
                 pBodyIn.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
                 pBodyIn.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
                 vh.tvBody.setLayoutParams(pBodyIn);
-
                 RelativeLayout.LayoutParams pTimeIn = (RelativeLayout.LayoutParams) vh.tvTime.getLayoutParams();
                 pTimeIn.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
                 pTimeIn.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
-                vh.tvBody.setLayoutParams(pTimeIn);
+                vh.tvTime.setLayoutParams(pTimeIn);
                 break;
             case Telephony.Sms.MESSAGE_TYPE_SENT:
                 RelativeLayout.LayoutParams pBodyOut = (RelativeLayout.LayoutParams) vh.tvBody.getLayoutParams();
                 pBodyOut.addRule(RelativeLayout.ALIGN_PARENT_START, 0);
                 pBodyOut.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
                 vh.tvBody.setLayoutParams(pBodyOut);
-
                 RelativeLayout.LayoutParams pTimeOut = (RelativeLayout.LayoutParams) vh.tvTime.getLayoutParams();
                 pTimeOut.addRule(RelativeLayout.ALIGN_PARENT_START, 0);
                 pTimeOut.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
-                vh.tvBody.setLayoutParams(pTimeOut);
+                vh.tvTime.setLayoutParams(pTimeOut);
                 break;
         }
 
