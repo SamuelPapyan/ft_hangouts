@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.Telephony;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,8 @@ public class SmsCursorRecyclerAdapter extends CursorRecyclerAdapter {
     public void onBindViewHolderCursor(RecyclerView.ViewHolder holder, Cursor cursor) {
         SmsViewHolder vh = (SmsViewHolder) holder;
 
-        @SuppressLint("Range") int type = cursor.getInt(cursor.getColumnIndex(Telephony.Sms.TYPE));
+        int typeIndex = cursor.getColumnIndex(Telephony.Sms.TYPE) ;
+        int type = cursor.getInt(typeIndex);
         switch (type) {
             case Telephony.Sms.MESSAGE_TYPE_INBOX:
                 RelativeLayout.LayoutParams pBodyIn = (RelativeLayout.LayoutParams) vh.tvBody.getLayoutParams();

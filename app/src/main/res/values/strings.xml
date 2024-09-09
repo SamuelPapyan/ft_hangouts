@@ -41,6 +41,7 @@
     <string name="txt_avatar_load_error">Error while loading avatar</string>
     <string name="txt_read_storage_rationale">Storage permission is needed to load avatars</string>
     <string name="txt_read_sms_rationale">SMS permission is needed to load messages</string>
+    <string name="txt_send_sms_rationale">Send SMS permission is needed to load messages</string>
     <string name="txt_storage_permission_refused">Application needs storage permission to work correctly</string>
     <string name="txt_sms_permission_refused">Application needs sms permission to show messages</string>
     <string name="txt_no_sms_permission">SMS permission not available</string>

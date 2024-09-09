@@ -48,6 +48,7 @@
     <string name="txt_no_sms_permission">Permission de SMS non disponible</string>
     <string name="txt_ok">D\'accord</string>
     <string name="txt_read_sms_rationale">Permission de SMS est nécessaire pour charger les messages</string>
+    <string name="txt_send_sms_rationale">Permission de Send SMS est nécessaire pour charger les messages</string>
     <string name="txt_read_storage_rationale">L\'autorisation de stockage est nécessaire pour charger avatars</string>
     <string name="txt_remove_avatar">Retirer avatar</string>
     <string name="txt_sms_permission_refused">Application doit permission de sms pour afficher les messages</string>

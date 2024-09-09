@@ -1,15 +1,19 @@
 package com.example.ft_hangouts.activity;
 
 import android.Manifest;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
+
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+
+import androidx.loader.content.CursorLoader;
+
+import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
+import androidx.loader.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -47,6 +51,7 @@ public class SmsActivity extends BaseActivity
     };
     private static final String SMS_SORT_ORDER = Telephony.Sms.DATE + " ASC";
     private static final int REQUEST_READ_SMS = 1;
+    private static final int REQUEST_SEND_SMS = 3;
     private static final int SMS_LOADER_ID = 2;
 
     private Uri mUri;
@@ -60,6 +65,7 @@ public class SmsActivity extends BaseActivity
     private EditText mSendMessageEt;
     private ImageButton mSendMessageIb;
 
+    private Context mContext = this;
     private static final String BUFFER_MESSAGE = "buffer_message";
 
     @Override
@@ -105,7 +111,7 @@ public class SmsActivity extends BaseActivity
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
                 == PackageManager.PERMISSION_GRANTED) {
-            getLoaderManager().initLoader(SMS_LOADER_ID, null, this);
+            getSupportLoaderManager().initLoader(SMS_LOADER_ID, null, this);
         } else {
             mNoMessagesTv.setText(R.string.txt_no_sms_permission);
             requestReadSmsPermission();
@@ -117,22 +123,22 @@ public class SmsActivity extends BaseActivity
                 if (ActivityCompat.checkSelfPermission(SmsActivity.this,
                         Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
-                    String message = mSendMessageEt.getText().toString();
-                    if (message.length() > 0) {
-                        SmsManager.getDefault().sendTextMessage(mPhone, null, message, null, null);
-                        mSendMessageEt.setText(null);
-                    } else {
-                        Toast.makeText(SmsActivity.this, R.string.txt_empty_message,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    sendMessage();
                 } else {
-                    requestReadSmsPermission();
+                    requestSendSmsPermission();
                 }
             }
         });
+    }
 
-        if (savedInstanceState != null) {
-            mSendMessageEt.setTextKeepState(savedInstanceState.getString(BUFFER_MESSAGE));
+    private void sendMessage() {
+        String message = mSendMessageEt.getText().toString();
+        if (message.length() > 0) {
+            SmsManager.getDefault().sendTextMessage(mPhone, null, message, null, null);
+            mSendMessageEt.setText(null);
+        } else {
+            Toast.makeText(SmsActivity.this, R.string.txt_empty_message,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -168,7 +174,7 @@ public class SmsActivity extends BaseActivity
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         Log.d(TAG, "onCreateLoader: called");
         String selection = Telephony.Sms.ADDRESS + "=?";
         String[] selectionArgs = {mPhone};
@@ -183,7 +189,7 @@ public class SmsActivity extends BaseActivity
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         Log.d(TAG, "onLoadFinished: cursor size=" + data.getCount());
         if (data.getCount() > 0) {
             mNoMessagesTv.setVisibility(View.GONE);
@@ -193,10 +199,11 @@ public class SmsActivity extends BaseActivity
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         Log.d(TAG, "onLoaderReset: called");
         mAdapter.swapCursor(null);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -210,11 +217,19 @@ public class SmsActivity extends BaseActivity
                 finish();
             }
         }
+        if (requestCode == REQUEST_SEND_SMS) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendMessage();
+            } else {
+                Log.d(TAG, "Nothing for Sending SMS");
+            }
+        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
     private void requestReadSmsPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.READ_SMS)) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+                == PackageManager.PERMISSION_GRANTED) {
             Snackbar.make(mCoordinatorLayout, R.string.txt_read_sms_rationale,
                             Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.txt_ok, new View.OnClickListener() {
@@ -230,6 +245,27 @@ public class SmsActivity extends BaseActivity
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_SMS},
                     REQUEST_READ_SMS);
+        }
+    }
+
+    private void requestSendSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                == PackageManager.PERMISSION_GRANTED) {
+            Snackbar.make(mCoordinatorLayout, R.string.txt_read_sms_rationale,
+                            Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.txt_ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ActivityCompat.requestPermissions(SmsActivity.this,
+                                    new String[]{Manifest.permission.SEND_SMS},
+                                    REQUEST_SEND_SMS);
+                        }
+                    })
+                    .show();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    REQUEST_SEND_SMS);
         }
     }
 }
