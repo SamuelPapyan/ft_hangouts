@@ -51,9 +51,10 @@ public class ContactViewActivity extends BaseActivity{
     private ImageView mAvatarIv;
     private TextView mNameTv;
     private TextView mLastNameTv;
-    private RelativeLayout mPhoneHolderRl;
+    private LinearLayout mPhoneHolderLl;
     private TextView mPhoneTv;
-    private ImageView mMessageTv;
+
+    private LinearLayout mSmsHolder;
     private LinearLayout mEmailHolderLl;
     private TextView mEmailTv;
     private TextView mAddressTv;
@@ -85,9 +86,9 @@ public class ContactViewActivity extends BaseActivity{
         mAvatarIv = (ImageView) findViewById(R.id.iv_avatar);
         mNameTv = (TextView) findViewById(R.id.tv_name);
         mLastNameTv = (TextView) findViewById(R.id.tv_last_name);
-        mPhoneHolderRl = (RelativeLayout) findViewById(R.id.rl_phone_holder);
+        mPhoneHolderLl = (LinearLayout) findViewById(R.id.ll_phone_holder);
         mPhoneTv = (TextView) findViewById(R.id.tv_phone);
-        mMessageTv = (ImageView) findViewById(R.id.iv_message);
+        mSmsHolder = (LinearLayout) findViewById(R.id.ll_sms_holder);
         mEmailHolderLl = (LinearLayout) findViewById(R.id.ll_email_holder);
         mEmailTv = (TextView) findViewById(R.id.tv_email);
         mAddressTv = (TextView) findViewById(R.id.tv_address);
@@ -103,7 +104,7 @@ public class ContactViewActivity extends BaseActivity{
             finish();
         }
 
-        mPhoneHolderRl.setOnClickListener(new View.OnClickListener() {
+        mPhoneHolderLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_DIAL);
@@ -112,7 +113,7 @@ public class ContactViewActivity extends BaseActivity{
             }
         });
 
-        mMessageTv.setOnClickListener(new View.OnClickListener() {
+        mSmsHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();

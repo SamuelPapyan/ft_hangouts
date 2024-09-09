@@ -64,6 +64,7 @@
     <!-- Strings related to Settings -->
     <!-- Color theme settings -->
     <string name="pref_title_color_theme">Color theme</string>
+    <string name="send_sms">Send SMS</string>
     <string-array name="pref_theme_list_titles">
         <item>@string/color_theme_ip</item>
         <item>@string/color_theme_tdo</item>

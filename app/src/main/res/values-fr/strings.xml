@@ -56,4 +56,5 @@
     <string name="color_theme_dpl">Deep purple avec l\'accent citron vert</string>
     <string name="color_theme_ip">Indigo avec l\'accent rose</string>
     <string name="color_theme_tdo">Sarcelle avec l\'accent deep orange</string>
+    <string name="send_sms">Envoyer un SMS</string>
 </resources>
