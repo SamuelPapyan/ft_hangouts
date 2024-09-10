@@ -32,9 +32,9 @@ public final class ContactsContract {
                 = Uri.parse(SCHEME + AUTHORITY + PATH_ENTRY_ID + "/#");
 
 
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.florin.contacts";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.spapyan.contacts";
 
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.florin.contacts";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.spapyan.contacts";
 
         public static final String DEFAULT_SORT_ORDER = "name ASC";
 
