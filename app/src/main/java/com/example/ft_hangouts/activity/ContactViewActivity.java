@@ -153,10 +153,10 @@ public class ContactViewActivity extends BaseActivity{
     protected void onResume() {
         super.onResume();
 
-        if (Build.VERSION.SDK_INT >= 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
-                != PackageManager.PERMISSION_GRANTED &&
-                Build.VERSION.SDK_INT < 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= 33
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED
+                && Build.VERSION.SDK_INT < 33
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.txt_storage_permission_refused, Toast.LENGTH_LONG).show();
             finish();
         }
@@ -278,7 +278,6 @@ public class ContactViewActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, ContactsListActivity.class));
         finish();
         super.onBackPressed();
     }

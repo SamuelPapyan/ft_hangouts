@@ -122,7 +122,7 @@ public class ContactsListActivity extends BaseActivity
         Log.d(TAG, "onRequestPermissionsResult: called");
         if (requestCode == REQUEST_READ_MEDIA_IMAGES || requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initRecyclerView();
+                recreate();
             } else {
                 Toast.makeText(this, R.string.txt_storage_permission_refused, Toast.LENGTH_LONG).show();
                 finish();

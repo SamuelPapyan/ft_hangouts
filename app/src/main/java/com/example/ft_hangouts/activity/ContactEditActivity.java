@@ -274,13 +274,10 @@ public class ContactEditActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        if (mState == ACTIVITY_STATE_INSERT) {
-            startActivity(new Intent(this, ContactsListActivity.class));
-            finish();
-        } else if (mState == ACTIVITY_STATE_EDIT) {
+        if (mState == ACTIVITY_STATE_EDIT) {
             startActivity(new Intent(Intent.ACTION_VIEW, mUri));
-            finish();
         }
+        finish();
         super.onBackPressed();
     }
 
