@@ -298,59 +298,62 @@ public class ContactEditActivity extends BaseActivity{
 
     private void saveEntry() {
         Log.d(TAG, "saveEntry: called");
-
-        ContentValues values = new ContentValues();
-        if (mState == ACTIVITY_STATE_EDIT) {
-            values.put(ContactsContract.Contacts.COLUMN_NAME_MODIFICATION_DATE,
-                    System.currentTimeMillis());
-        }
-
-        String avatarUri = "";
-        if (mAvatarUri != null) {
-            avatarUri = mAvatarUri.toString();
-        }
-        String name = mNameEt.getText().toString();
-        String lastName = mLastNameEt.getText().toString();
         String phone = mPhoneEt.getText().toString();
-        String email = mEmailEt.getText().toString();
-        String address = mAddressEt.getText().toString();
+        if (phone.length() > 0) {
+            ContentValues values = new ContentValues();
+            if (mState == ACTIVITY_STATE_EDIT) {
+                values.put(ContactsContract.Contacts.COLUMN_NAME_MODIFICATION_DATE,
+                        System.currentTimeMillis());
+            }
 
-        values.put(ContactsContract.Contacts.COLUMN_NAME_AVATAR, avatarUri);
-        values.put(ContactsContract.Contacts.COLUMN_NAME_NAME, name);
-        values.put(ContactsContract.Contacts.COLUMN_NAME_LAST_NAME, lastName);
-        values.put(ContactsContract.Contacts.COLUMN_NAME_PHONE, phone);
-        values.put(ContactsContract.Contacts.COLUMN_NAME_EMAIL, email);
-        values.put(ContactsContract.Contacts.COLUMN_NAME_ADDRESS, address);
+            String avatarUri = "";
+            if (mAvatarUri != null) {
+                avatarUri = mAvatarUri.toString();
+            }
+            String name = mNameEt.getText().toString();
+            String lastName = mLastNameEt.getText().toString();
+            String email = mEmailEt.getText().toString();
+            String address = mAddressEt.getText().toString();
 
-        NotifyingAsyncQueryHandler saveHandler = new NotifyingAsyncQueryHandler(this,
-                new NotifyingAsyncQueryHandler.AsyncQueryListener() {
-                    @Override
-                    public void onQueryComplete(int token, Object cookie, Cursor cursor) {
-                        // nothing
-                    }
-                    @Override
-                    public void onInsertComplete(int token, Object cookie, Uri uri) {
-                        Toast.makeText(ContactEditActivity.this, R.string.txt_contact_created, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                        finish();
-                    }
+            values.put(ContactsContract.Contacts.COLUMN_NAME_AVATAR, avatarUri);
+            values.put(ContactsContract.Contacts.COLUMN_NAME_NAME, name);
+            values.put(ContactsContract.Contacts.COLUMN_NAME_LAST_NAME, lastName);
+            values.put(ContactsContract.Contacts.COLUMN_NAME_PHONE, phone);
+            values.put(ContactsContract.Contacts.COLUMN_NAME_EMAIL, email);
+            values.put(ContactsContract.Contacts.COLUMN_NAME_ADDRESS, address);
 
-                    @Override
-                    public void onUpdateComplete(int token, Object cookie, int result) {
-                        Toast.makeText(ContactEditActivity.this, R.string.txt_contact_updated, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Intent.ACTION_VIEW, mUri));
-                        finish();
-                    }
+            NotifyingAsyncQueryHandler saveHandler = new NotifyingAsyncQueryHandler(this,
+                    new NotifyingAsyncQueryHandler.AsyncQueryListener() {
+                        @Override
+                        public void onQueryComplete(int token, Object cookie, Cursor cursor) {
+                            // nothing
+                        }
+                        @Override
+                        public void onInsertComplete(int token, Object cookie, Uri uri) {
+                            Toast.makeText(ContactEditActivity.this, R.string.txt_contact_created, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                            finish();
+                        }
 
-                    @Override
-                    public void onDeleteComplete(int token, Object cookie, int result) {
-                        // nothing
-                    }
-                });
-        if (mState == ACTIVITY_STATE_INSERT) {
-            saveHandler.startInsert(INSERT_TOKEN, null, ContactsContract.Contacts.CONTENT_URI, values);
-        } else if (mState == ACTIVITY_STATE_EDIT) {
-            saveHandler.startUpdate(UPDATE_TOKEN, null, mUri, values, null, null);
+                        @Override
+                        public void onUpdateComplete(int token, Object cookie, int result) {
+                            Toast.makeText(ContactEditActivity.this, R.string.txt_contact_updated, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Intent.ACTION_VIEW, mUri));
+                            finish();
+                        }
+
+                        @Override
+                        public void onDeleteComplete(int token, Object cookie, int result) {
+                            // nothing
+                        }
+                    });
+            if (mState == ACTIVITY_STATE_INSERT) {
+                saveHandler.startInsert(INSERT_TOKEN, null, ContactsContract.Contacts.CONTENT_URI, values);
+            } else if (mState == ACTIVITY_STATE_EDIT) {
+                saveHandler.startUpdate(UPDATE_TOKEN, null, mUri, values, null, null);
+            }
+        } else {
+            Toast.makeText(ContactEditActivity.this, R.string.txt_phone_number_mandatory, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -49,6 +49,8 @@
     <string name="txt_ok">D\'accord</string>
     <string name="txt_read_sms_rationale">Permission de SMS est nécessaire pour charger les messages</string>
     <string name="txt_send_sms_rationale">Permission de Send SMS est nécessaire pour charger les messages</string>
+    <string name="txt_phone_number_mandatory">Le numéro de téléphone est obligatoire</string>
+    <string name="txt_add_email_message">Ajouter une adresse e-mail pour envoyer un e-mail</string>
     <string name="txt_read_storage_rationale">L\'autorisation de stockage est nécessaire pour charger avatars</string>
     <string name="txt_remove_avatar">Retirer avatar</string>
     <string name="txt_sms_permission_refused">Application doit permission de sms pour afficher les messages</string>

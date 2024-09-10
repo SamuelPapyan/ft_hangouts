@@ -142,9 +142,16 @@ public class ContactViewActivity extends BaseActivity{
         mEmailHolderLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_SENDTO);
-                i.setData(Uri.parse("mailto:" + mEmailTv.getText()));
-                startActivity(i);
+                int emailIndex = mCursor.getColumnIndex(
+                        ContactsContract.Contacts.COLUMN_NAME_EMAIL);
+                String email = mCursor.getString(emailIndex);
+                if (email.length() > 0) {
+                        Intent i = new Intent(Intent.ACTION_SENDTO);
+                        i.setData(Uri.parse("mailto:" + mEmailTv.getText()));
+                        startActivity(i);
+                } else {
+                    Toast.makeText(ContactViewActivity.this, R.string.txt_add_email_message, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
