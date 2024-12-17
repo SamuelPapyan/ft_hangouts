@@ -85,8 +85,8 @@ public class ContactsListActivity extends BaseActivity
         mContactsNotAvailableTv = (TextView) findViewById(R.id.tv_contacts_not_available);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        if (Build.VERSION.SDK_INT >= 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
-                == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             initRecyclerView();
             LoaderManager lm = getSupportLoaderManager();
@@ -132,15 +132,15 @@ public class ContactsListActivity extends BaseActivity
     }
 
     private void requestReadStoragePermission() {
-        if (Build.VERSION.SDK_INT >= 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
-                == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             Snackbar.make(mCoordinatorLayout, R.string.txt_read_storage_rationale,
                             Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.txt_ok, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (Build.VERSION.SDK_INT >= 33)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                                 ActivityCompat.requestPermissions(ContactsListActivity.this,
                                         new String[]{Manifest.permission.READ_MEDIA_IMAGES},
                                         REQUEST_READ_MEDIA_IMAGES);
@@ -153,7 +153,7 @@ public class ContactsListActivity extends BaseActivity
                     .show();
         } else {
             Log.d(TAG, "requesting permissions...");
-            if (Build.VERSION.SDK_INT >= 33)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                 ActivityCompat.requestPermissions(ContactsListActivity.this,
                         new String[]{Manifest.permission.READ_MEDIA_IMAGES},
                         REQUEST_READ_MEDIA_IMAGES);

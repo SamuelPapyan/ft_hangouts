@@ -159,19 +159,21 @@ public class ContactViewActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (Build.VERSION.SDK_INT >= 33
+        Log.d("Contact View Activity: ", "onResume");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED
-                && Build.VERSION.SDK_INT < 33
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.txt_storage_permission_refused, Toast.LENGTH_LONG).show();
             finish();
         }
 
+        Log.d("Contact View Activity: ", "QueryHandlerSetting...");
         NotifyingAsyncQueryHandler queryHandler = new NotifyingAsyncQueryHandler(this,
                 new NotifyingAsyncQueryHandler.AsyncQueryListener() {
                     @Override
                     public void onQueryComplete(int token, Object cookie, Cursor cursor) {
+                        Log.d("Contact View Activity: ", "queryHandlerCalled");
                         mCursor = cursor;
                         if (mCursor != null) {
                             mCursor.moveToFirst();
@@ -245,6 +247,7 @@ public class ContactViewActivity extends BaseActivity{
                         // nothing
                     }
                 });
+        Log.d("Contact View Activity: ", "QueryHandlerCalling...");
         queryHandler.startQuery(QUERY_TOKEN, null, mUri, PROJECTION, null, null, null);
     }
 
