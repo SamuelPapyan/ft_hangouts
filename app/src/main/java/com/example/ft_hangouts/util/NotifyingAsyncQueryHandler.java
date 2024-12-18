@@ -32,9 +32,7 @@ public class NotifyingAsyncQueryHandler extends AsyncQueryHandler {
 
     @Override
     protected  void onQueryComplete(int token, Object cookie, Cursor cursor) {
-        Log.d("NaqHandler", "onQueryComplete");
         final AsyncQueryListener listener = mListener;
-        Log.d("NaqHandler", "our listener is " + listener);
         if (listener != null) {
             listener.onQueryComplete(token, cookie, cursor);
         } else if (cursor != null) {
