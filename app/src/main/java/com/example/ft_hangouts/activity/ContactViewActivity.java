@@ -159,7 +159,7 @@ public class ContactViewActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Contact View Activity: ", "onResume");
+        Log.d(TAG, "onResume");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
@@ -168,12 +168,12 @@ public class ContactViewActivity extends BaseActivity{
             finish();
         }
 
-        Log.d("Contact View Activity: ", "QueryHandlerSetting...");
+        Log.d(TAG, "QueryHandlerSetting...");
         NotifyingAsyncQueryHandler queryHandler = new NotifyingAsyncQueryHandler(this,
                 new NotifyingAsyncQueryHandler.AsyncQueryListener() {
                     @Override
                     public void onQueryComplete(int token, Object cookie, Cursor cursor) {
-                        Log.d("Contact View Activity: ", "queryHandlerCalled");
+                        Log.d(TAG, "queryHandlerCalled");
                         mCursor = cursor;
                         if (mCursor != null) {
                             mCursor.moveToFirst();
@@ -247,7 +247,7 @@ public class ContactViewActivity extends BaseActivity{
                         // nothing
                     }
                 });
-        Log.d("Contact View Activity: ", "QueryHandlerCalling...");
+        Log.d(TAG, "QueryHandlerCalling...");
         queryHandler.startQuery(QUERY_TOKEN, null, mUri, PROJECTION, null, null, null);
     }
 
